@@ -190,6 +190,18 @@
   function getWizardHeight(width) {
     return 1.337 * width;
   }
+
+  function getWizardX(fieldWidth) {
+    return (fieldWidth - wizardWidth) / 2;
+  }
+
+  function getWizardY(fieldHeight) {
+    return fieldHeight / 3;
+  }
+
+  function getFireballSpeed(isLeft) {
+    return isLeft ? 5 : 3;
+  }
 </script>
 <script src="js/game.js"></script>
 
