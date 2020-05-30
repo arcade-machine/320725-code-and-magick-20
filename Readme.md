@@ -1,7 +1,7 @@
 # Учебный проект «Код и Магия» [![Build status][travis-image]][travis-url]
 
 * Студент: [Сергей Леонов](https://up.htmlacademy.ru/javascript/20/user/320725).
-* Наставник: `Неизвестно`.
+* Наставник: [Сергей Леонов](https://up.htmlacademy.ru/javascript/20/user/320725).
 
 ---
 
