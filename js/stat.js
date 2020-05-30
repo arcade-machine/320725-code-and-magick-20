@@ -1,21 +1,37 @@
 var CLOUD_WIDTH = 420;
 var CLOUD_HEIGHT = 270;
+var CLOUD_POSITION_X = 100;
+var CLOUD_POSITION_Y = 10;
 
 var COLUMN_GAP = 50;
-var COLUMN_WIDTH = 40;
+var GRAPH_WIDTH = 40;
+var MAX_GRAPH_HEIGH = 150;
+var COLUMN_WIDTH = COLUMN_GAP + GRAPH_WIDTH;
+
 
 function renderCloud(ctx, posX, posY, color) {
   ctx.fillStyle = color;
   ctx.fillRect(posX, posY, CLOUD_WIDTH, CLOUD_HEIGHT);
 }
 
-function renderPlayerStatistic(ctx, name) {
-  ctx.fillStyle = '#000';
-  ctx.fillText('4025', 150, 90);
-  ctx.fillText(name, 150, 270);
+function getBackgroundForGraph() {
+  return 'rgba(0, 0, 255, ' + getRandomArbitrary(0.1, 1) +')';
+}
 
-  ctx.fillStyle = 'rgba(255, 0, 0, 1)';
-  ctx.fillRect(150, 100, 40, 150);
+function getRandomArbitrary(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+function renderPlayerStatistic(ctx, name, column) {
+  ctx.fillStyle = '#000';
+  ctx.fillText('4025', CLOUD_POSITION_X + COLUMN_GAP + COLUMN_WIDTH * column, 90);
+  ctx.fillText(name, CLOUD_POSITION_X + COLUMN_GAP + COLUMN_WIDTH * column, CLOUD_HEIGHT);
+
+  name === 'Вы'
+    ? ctx.fillStyle = 'rgba(255, 0, 0, 1)'
+    : ctx.fillStyle = getBackgroundForGraph();
+
+  ctx.fillRect(CLOUD_POSITION_X + COLUMN_GAP + COLUMN_WIDTH * column, 100, GRAPH_WIDTH, MAX_GRAPH_HEIGH);
 }
 
 function renderStatistics(canvas, playersNames, timeToCompleteLvl) {
@@ -27,6 +43,9 @@ function renderStatistics(canvas, playersNames, timeToCompleteLvl) {
   canvas.fillText('Ура вы победили!', 120, 40);
   canvas.fillText('Список результатов:', 120, 60);
 
-  var players = ['Вы', 'You', 'Keepo', 'Kappa'];
-  renderPlayerStatistic(canvas, players[0]);
+  playersNames.forEach(
+    (player, index) => {
+      renderPlayerStatistic(canvas, player, index);
+    }
+  );
 }
