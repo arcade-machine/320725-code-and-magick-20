@@ -4,6 +4,7 @@ var CLOUD_WIDTH = 420;
 var CLOUD_HEIGHT = 270;
 var CLOUD_POSITION_X = 100;
 var CLOUD_POSITION_Y = 10;
+var CLOUD_BORDER_GAP = 20;
 
 var TEXT_HEIGHT = 10;
 
@@ -64,19 +65,19 @@ function renderStatistics(canvas,
   var biggestScore = Math.round(getMaximumNumber(timeToCompleteLvl));
 
   renderCloud(canvas,
-    110,
-    20,
+    CLOUD_POSITION_X + 10,
+    CLOUD_POSITION_Y + 10,
     'rgba(0, 0, 0, 0.7)');
   renderCloud(canvas,
-    100,
-    10,
+    CLOUD_POSITION_X,
+    CLOUD_POSITION_Y,
     '#fff');
 
 
   canvas.fillStyle = '#000';
   canvas.font = '16px PT mono';
-  canvas.fillText('Ура вы победили!', 120, 40);
-  canvas.fillText('Список результатов:', 120, 60);
+  canvas.fillText('Ура вы победили!', CLOUD_POSITION_X + CLOUD_BORDER_GAP, CLOUD_POSITION_Y + CLOUD_BORDER_GAP + TEXT_HEIGHT);
+  canvas.fillText('Список результатов:', CLOUD_POSITION_X + CLOUD_BORDER_GAP, CLOUD_POSITION_Y + CLOUD_BORDER_GAP + TEXT_HEIGHT * 3);
 
   playersNames.forEach(
     function (player, index) {
