@@ -95,4 +95,4 @@ function renderStatistics(canvas, playersNames, timeToCompleteLvl) {
   );
 }
 
-// renderStatistics();
+renderStatistics();
