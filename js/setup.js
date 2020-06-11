@@ -15,6 +15,9 @@ var avatarBlock = document.querySelector('.setup-open');
 var avatarIcon = avatarBlock.querySelector('.setup-open-icon');
 
 var setupPopup = document.querySelector('.setup');
+var setupWizardForm = setupPopup.querySelector('.setup-wizard-form');
+var setupWizardFormSubmit = setupPopup.querySelector('.setup-submit');
+var setupSimilar = setupPopup.querySelector('.setup-similar');
 var setupNameInput = setupPopup.querySelector('.setup-user-name');
 var closePopupButton = setupPopup.querySelector('.setup-close');
 
@@ -28,25 +31,6 @@ function generateWizard() {
   wizard.colorCoat = getRandomArrayItem(coatColors);
   wizard.eyeColor = getRandomArrayItem(eyesColor);
   wizards.push(wizard);
-}
-
-function openPopup() {
-  setupPopup.classList.remove('hidden');
-  closePopupButton.addEventListener('click', closePopup);
-  document.addEventListener('keydown', closePopupOnEsc);
-}
-
-function closePopup() {
-  setupPopup.classList.add('hidden');
-  closePopupButton.removeEventListener('click', closePopup);
-  document.removeEventListener('keydown', closePopupOnEsc);
-}
-
-function closePopupOnEsc(evt) {
-  if (evt.key === 'Escape' && document.activeElement !== setupNameInput) {
-    evt.preventDefault();
-    closePopup();
-  }
 }
 
 for (var i = 0; i < WIZARDS_AMOUNT; i++) {
@@ -73,13 +57,43 @@ wizards.forEach(
     }
 );
 
+function openPopup() {
+  setupPopup.classList.remove('hidden');
+  setupSimilar.classList.remove('hidden');
+
+  closePopupButton.addEventListener('click', closePopup);
+  setupWizardForm.addEventListener('submit', onSubmitForm);
+  document.addEventListener('keydown', closePopupOnUserInput);
+}
+
+function closePopup() {
+  setupPopup.classList.add('hidden');
+
+  closePopupButton.removeEventListener('click', closePopup);
+  setupWizardForm.removeEventListener('submit', onSubmitForm);
+  document.removeEventListener('keydown', closePopupOnUserInput);
+}
+
+function closePopupOnUserInput(evt) {
+  if (
+    evt.key === 'Escape' && document.activeElement !== setupNameInput ||
+    evt.key === 'Enter' && document.activeElement === closePopupButton
+  ) {
+    closePopup();
+  }
+}
+
+function onSubmitForm(evt) {
+  if (document.activeElement !== setupWizardFormSubmit) {
+    evt.preventDefault();
+  }
+}
+
 avatarBlock.addEventListener('click', openPopup);
 avatarIcon.addEventListener('keydown', function (evt) {
   if (evt.key === 'Enter') {
-    evt.preventDefault();
     openPopup();
   }
 });
 
-document.querySelector('.setup-similar').classList.remove('hidden');
 similarWizardsList.appendChild(wizardDocumentFragment);
