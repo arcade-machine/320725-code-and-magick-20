@@ -17,8 +17,24 @@
     return number;
   }
 
+  function getRandomArrayItem(array) {
+    return array[Math.floor(Math.random() * array.length)];
+  }
+
+  function filterItemFromArray(array, filteredItem) {
+    var filteredArray = array.slice();
+
+    return filteredArray.filter(
+        function (item) {
+          return (item !== filteredItem);
+        }
+    );
+  }
+
   window.commonMudule = {
     getMaximumNumber: getMaximumNumber,
-    getRandomArbitrary: getRandomArbitrary
-  }
+    getRandomArbitrary: getRandomArbitrary,
+    getRandomArrayItem: getRandomArrayItem,
+    filterItemFromArray: filterItemFromArray
+  };
 })();
