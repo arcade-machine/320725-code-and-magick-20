@@ -17,6 +17,8 @@
   var wizardEyesInput = setupPlayer.querySelector('input[name="eyes-color"]');
   var wizardFireballInput = setupPlayer.querySelector('input[name="fireball-color"]');
 
+  var uploadBlock = setupPopup.querySelector('.upload');
+
   function openPopup() {
     setupPopup.classList.remove('hidden');
     setupSimilar.classList.remove('hidden');
@@ -85,6 +87,43 @@
           wizardFireballInput);
     });
   }
+
+  uploadBlock.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
+
+    var startingCoordinates = {
+      x: evt.clientX,
+      y: evt.clientY
+    };
+
+    function onMouseMove(mouseEvt) {
+      mouseEvt.preventDefault();
+
+      var shift = {
+        x: startingCoordinates.x - mouseEvt.clientX,
+        y: startingCoordinates.y - mouseEvt.clientY
+      };
+
+      startingCoordinates = {
+        x: mouseEvt.clientX,
+        y: mouseEvt.clientY
+      };
+
+      setupPopup.style.top = (setupPopup.offsetTop - shift.y) + 'px';
+      setupPopup.style.left = (setupPopup.offsetLeft - shift.x) + 'px';
+    }
+
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
+
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  });
 
   window.dialogModule = {
     openPopup: openPopup,
