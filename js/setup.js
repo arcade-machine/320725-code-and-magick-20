@@ -1,10 +1,7 @@
 'use strict';
 
 (function () {
-  window.backendModule.load(
-      getWizards,
-      onLoadError
-  );
+  var wizards = [];
 
   var wizardTemplate = document.querySelector('#similar-wizard-template');
   var similarWizardsList = document.querySelector('.setup-similar-list');
@@ -14,7 +11,7 @@
 
   var wizardDocumentFragment = new DocumentFragment();
 
-  function generateWizard(wizardsArray) {
+  function generateWizard() {
     var wizard = {};
     wizard.name =
       window.commonMudule.getRandomArrayItem(
@@ -30,16 +27,16 @@
     wizard.eyeColor = window.commonMudule.getRandomArrayItem(
         window.commonMudule.WIZARDS_MOCK_DATA.EYES_COLOR
     );
-    wizardsArray.push(wizard);
+    wizards.push(wizard);
   }
 
   function getWizards(wizardsFromServer) {
-    var wizardsToRender = window.commonMudule.getRandomItemsFromArray(
+    wizards = window.commonMudule.getRandomItemsFromArray(
         wizardsFromServer,
         window.commonMudule.WIZARDS_MOCK_DATA.WIZARDS_AMOUNT
     );
 
-    wizardsToRender.forEach(
+    wizards.forEach(
         function (wizard) {
           renderSimilarWizards(wizard);
         }
@@ -49,8 +46,6 @@
   }
 
   function onLoadError() {
-    var wizards = [];
-
     for (var i = 0; i < window.commonMudule.WIZARDS_MOCK_DATA.WIZARDS_AMOUNT; i++) {
       generateWizard(wizards);
     }
@@ -83,4 +78,9 @@
       window.dialogModule.openPopup();
     }
   });
+
+  window.backendModule.load(
+      getWizards,
+      onLoadError
+  );
 })();
