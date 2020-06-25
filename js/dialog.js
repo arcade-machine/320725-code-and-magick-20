@@ -50,7 +50,12 @@
   function onSubmitForm(evt) {
     if (document.activeElement !== setupWizardFormSubmit) {
       evt.preventDefault();
+      return;
     }
+    evt.preventDefault();
+
+    var formData = new FormData(setupWizardForm);
+    window.backendModule.save(formData, closePopup);
   }
 
   function setupColorOfElement(element, colorsArray, paintedProperty, formInput) {
