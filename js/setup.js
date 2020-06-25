@@ -1,7 +1,10 @@
 'use strict';
 
 (function () {
-  var wizards = [];
+  window.backendModule.load(
+      getWizards,
+      onLoadError
+  );
 
   var wizardTemplate = document.querySelector('#similar-wizard-template');
   var similarWizardsList = document.querySelector('.setup-similar-list');
@@ -11,7 +14,7 @@
 
   var wizardDocumentFragment = new DocumentFragment();
 
-  function generateWizard() {
+  function generateWizard(wizardsArray) {
     var wizard = {};
     wizard.name =
       window.commonMudule.getRandomArrayItem(
@@ -27,11 +30,38 @@
     wizard.eyeColor = window.commonMudule.getRandomArrayItem(
         window.commonMudule.WIZARDS_MOCK_DATA.EYES_COLOR
     );
-    wizards.push(wizard);
+    wizardsArray.push(wizard);
   }
 
-  for (var i = 0; i < window.commonMudule.WIZARDS_MOCK_DATA.WIZARDS_AMOUNT; i++) {
-    generateWizard();
+  function getWizards(wizardsFromServer) {
+    var wizardsToRender = window.commonMudule.getRandomItemsFromArray(
+        wizardsFromServer,
+        window.commonMudule.WIZARDS_MOCK_DATA.WIZARDS_AMOUNT
+    );
+
+    wizardsToRender.forEach(
+        function (wizard) {
+          renderSimilarWizards(wizard);
+        }
+    );
+
+    similarWizardsList.appendChild(wizardDocumentFragment);
+  }
+
+  function onLoadError() {
+    var wizards = [];
+
+    for (var i = 0; i < window.commonMudule.WIZARDS_MOCK_DATA.WIZARDS_AMOUNT; i++) {
+      generateWizard(wizards);
+    }
+
+    wizards.forEach(
+        function (wizard) {
+          renderSimilarWizards(wizard);
+        }
+    );
+
+    similarWizardsList.appendChild(wizardDocumentFragment);
   }
 
   function renderSimilarWizards(wizard) {
@@ -47,18 +77,10 @@
     wizardDocumentFragment.appendChild(wizardTemplateForRender);
   }
 
-  wizards.forEach(
-      function (wizard) {
-        renderSimilarWizards(wizard);
-      }
-  );
-
   avatarBlock.addEventListener('click', window.dialogModule.openPopup);
   avatarIcon.addEventListener('keydown', function (evt) {
     if (evt.key === 'Enter') {
       window.dialogModule.openPopup();
     }
   });
-
-  similarWizardsList.appendChild(wizardDocumentFragment);
 })();

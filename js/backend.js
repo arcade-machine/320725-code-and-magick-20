@@ -4,7 +4,7 @@
   var wizardsURL = 'https://javascript.pages.academy/code-and-magick/data';
   var postWizardURL = 'https://javascript.pages.academy/code-and-magick';
 
-  function load(url, onSuccess, onError) {
+  function load(onSuccess, onError) {
     var xhr = new XMLHttpRequest();
 
     xhr.responseType = 'json';

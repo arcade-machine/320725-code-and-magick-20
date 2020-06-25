@@ -40,11 +40,22 @@
     );
   }
 
+  function getRandomItemsFromArray(array, amountOfItems) {
+    var shuffleArray = array.sort(
+        function () {
+          return 0.5 - Math.random();
+        }
+    );
+
+    return shuffleArray.slice(0, amountOfItems);
+  }
+
   window.commonMudule = {
     getMaximumNumber: getMaximumNumber,
     getRandomArbitrary: getRandomArbitrary,
     getRandomArrayItem: getRandomArrayItem,
     filterItemFromArray: filterItemFromArray,
+    getRandomItemsFromArray: getRandomItemsFromArray,
     WIZARDS_MOCK_DATA: WIZARDS_MOCK_DATA
   };
 })();
