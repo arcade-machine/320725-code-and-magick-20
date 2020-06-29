@@ -30,8 +30,33 @@
     wizards.push(wizard);
   }
 
-  for (var i = 0; i < window.commonMudule.WIZARDS_MOCK_DATA.WIZARDS_AMOUNT; i++) {
-    generateWizard();
+  function getWizards(wizardsFromServer) {
+    wizards = window.commonMudule.getRandomItemsFromArray(
+        wizardsFromServer,
+        window.commonMudule.WIZARDS_MOCK_DATA.WIZARDS_AMOUNT
+    );
+
+    wizards.forEach(
+        function (wizard) {
+          renderSimilarWizards(wizard);
+        }
+    );
+
+    similarWizardsList.appendChild(wizardDocumentFragment);
+  }
+
+  function onLoadError() {
+    for (var i = 0; i < window.commonMudule.WIZARDS_MOCK_DATA.WIZARDS_AMOUNT; i++) {
+      generateWizard(wizards);
+    }
+
+    wizards.forEach(
+        function (wizard) {
+          renderSimilarWizards(wizard);
+        }
+    );
+
+    similarWizardsList.appendChild(wizardDocumentFragment);
   }
 
   function renderSimilarWizards(wizard) {
@@ -47,12 +72,6 @@
     wizardDocumentFragment.appendChild(wizardTemplateForRender);
   }
 
-  wizards.forEach(
-      function (wizard) {
-        renderSimilarWizards(wizard);
-      }
-  );
-
   avatarBlock.addEventListener('click', window.dialogModule.openPopup);
   avatarIcon.addEventListener('keydown', function (evt) {
     if (evt.key === 'Enter') {
@@ -60,5 +79,8 @@
     }
   });
 
-  similarWizardsList.appendChild(wizardDocumentFragment);
+  window.backendModule.load(
+      getWizards,
+      onLoadError
+  );
 })();
