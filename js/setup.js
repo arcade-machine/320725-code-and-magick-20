@@ -24,7 +24,7 @@
     wizard.colorCoat = window.commonMudule.getRandomArrayItem(
         window.commonMudule.WIZARDS_MOCK_DATA.COAT_COLORS
     );
-    wizard.eyeColor = window.commonMudule.getRandomArrayItem(
+    wizard.colorEyes = window.commonMudule.getRandomArrayItem(
         window.commonMudule.WIZARDS_MOCK_DATA.EYES_COLOR
     );
     wizards.push(wizard);
@@ -43,6 +43,10 @@
     );
 
     similarWizardsList.appendChild(wizardDocumentFragment);
+
+    window.setupModule = {
+      wizards: wizardsFromServer
+    };
   }
 
   function onLoadError() {
@@ -67,7 +71,7 @@
 
     wizardTemplateName.innerHTML = wizard.name;
     wizardTemplateCoat.style.fill = wizard.colorCoat;
-    wizardTemplateEyes.style.fill = wizard.eyeColor;
+    wizardTemplateEyes.style.fill = wizard.colorEyes;
 
     wizardDocumentFragment.appendChild(wizardTemplateForRender);
   }

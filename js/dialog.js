@@ -8,15 +8,6 @@
   var setupNameInput = setupPopup.querySelector('.setup-user-name');
   var closePopupButton = setupPopup.querySelector('.setup-close');
 
-  var setupPlayer = setupPopup.querySelector('.setup-player');
-  var wizardAppearance = setupPlayer.querySelector('.wizard');
-  var wizardCoat = wizardAppearance.querySelector('.wizard-coat');
-  var wizardEyes = wizardAppearance.querySelector('.wizard-eyes');
-  var wizardFireball = setupPlayer.querySelector('.setup-fireball-wrap');
-  var wizardCoatInput = setupPlayer.querySelector('input[name="coat-color"]');
-  var wizardEyesInput = setupPlayer.querySelector('input[name="eyes-color"]');
-  var wizardFireballInput = setupPlayer.querySelector('input[name="fireball-color"]');
-
   var uploadBlock = setupPopup.querySelector('.upload');
 
   function openPopup() {
@@ -27,7 +18,7 @@
     setupWizardForm.addEventListener('submit', onSubmitForm);
     document.addEventListener('keydown', closePopupOnUserInput);
 
-    setupWizardCustomListeners();
+    window.renderSimilarWizardsModule.setupWizardCustomListeners();
   }
 
   function closePopup() {
@@ -56,41 +47,6 @@
 
     var formData = new FormData(setupWizardForm);
     window.backendModule.save(formData, closePopup);
-  }
-
-  function setupColorOfElement(element, colorsArray, paintedProperty, formInput) {
-    var currentFill = element.style[paintedProperty];
-    var currentColorOptions = window.commonMudule.filterItemFromArray(colorsArray, currentFill);
-    var randomColor = window.commonMudule.getRandomArrayItem(currentColorOptions);
-
-    element.style[paintedProperty] = randomColor;
-    formInput.value = randomColor;
-  }
-
-  function setupWizardCustomListeners() {
-    wizardCoat.addEventListener('click', function () {
-      setupColorOfElement(
-          wizardCoat,
-          window.commonMudule.WIZARDS_MOCK_DATA.COAT_COLORS,
-          'fill',
-          wizardCoatInput);
-    });
-
-    wizardEyes.addEventListener('click', function () {
-      setupColorOfElement(
-          wizardEyes,
-          window.commonMudule.WIZARDS_MOCK_DATA.EYES_COLOR,
-          'fill',
-          wizardEyesInput);
-    });
-
-    wizardFireball.addEventListener('click', function () {
-      setupColorOfElement(
-          wizardFireball,
-          window.commonMudule.WIZARDS_MOCK_DATA.FIREBALL_COLORS,
-          'background-color',
-          wizardFireballInput);
-    });
   }
 
   uploadBlock.addEventListener('mousedown', function (evt) {
